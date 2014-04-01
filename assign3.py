@@ -18,6 +18,8 @@ def create_a_port():
 	network_id= '17087163-a2a2-48d6-b26a-f1db86c0612a'
 	server_detail = nova_client.servers.get(server_id)
 	print server_detail.id
+	print "Enter the name"
+	name1 = raw_input();
 	 
 	if server_detail != None:
 	    credentials = get_credentials()
@@ -27,7 +29,7 @@ def create_a_port():
 		             "port": {
 		                     "admin_state_up": True,
 		                     "device_id": server_id,
-		                     "name": "port1",
+		                     "name": name1,
 		                     "network_id": network_id
 		              }
 		         }
@@ -40,15 +42,35 @@ def list_the_ports():
 	print print_values(ports, 'ports')
 	return
 
+def displayPortInfo()
+	print "Enter the port id of the port"
+	port_id = raw_input()
+	syscall = "neutron --os-username admin --os-password kalyani345 --os-tenant-name admin --os-auth-url http://172.16.139.128:5000/v2.0 port-show " + port_id + ""
+	os.system(syscall)
+	return
+
+def changeName()
+	print "Enter the port id of the port: "
+	port_id = raw_input()
+	print "Enter the name that you want to give the port: "
+	name = raw_input()
+	syscall = "neutron --os-username admin --os-password kalyani345 --os-tenant-name admin --os-auth-url http://172.16.139.128:5000/v2.0 port-update " + port_id + " --name" + name + ""
+	os.system(syscall)
+	return
+
 option = 0
 
 while option != 3:
-	print "1. Create Port\n2. List Ports\n3. Exit"
+	print "\n1. Create Port\n2. List Ports\n3. Display Information by Port ID\n4. Update Name of the Port"
 	option = int(raw_input())
 
 	if option == 1:
 		create_a_port()
 	elif option == 2:
 		list_the_ports()
-	else:
+	elif option == 3:
+		displayPortInfo()
+	elif option == 4:
+		changeName()
+	else
 		break
